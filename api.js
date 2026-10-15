@@ -1,5 +1,5 @@
 // ============================================
-// KASHMIRI BUG VIA WEB — API Server
+// ziddiboy BUG VIA WEB — API Server
 // ============================================
 require('dotenv').config();
 const express = require('express');
@@ -629,7 +629,7 @@ app.use((err, req, res, next) => {
 // ==================== START ====================
 app.listen(PORT, '0.0.0.0', () => {
     console.log('===========================================');
-    console.log('🚀 KASHMIRI BUG VIA WEB — API');
+    console.log('🚀 ziddi BUG VIA WEB — API');
     console.log(`📡 Port: ${PORT}`);
     console.log(`🤖 Bot: ${BOT_TOKEN ? BOT_TOKEN.substring(0, 10) + '...' : 'NOT SET'}`);
     console.log(`👑 Admin: ${ADMIN_ID}`);
