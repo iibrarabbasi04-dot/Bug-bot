@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "d4e69839ef058894",
+      "username": "test",
+      "email": "kashmirix3@gmail.com",
+      "passwordHash": "e949448d808a6b4810b5ea5ed251cbf8cadded7767a17aefe5a9157b309da3e6",
+      "token": "8074348e070621b5341c0ee90cf7cfb60f15818ec244b756e7a0f2f5a98b7a70",
+      "tier": "free",
+      "expiresAt": null,
+      "createdAt": 1789484875938,
+      "lastLogin": null,
+      "totalAttacks": 0
+    }
+  ],
+  "stats": {
+    "totalAttacks": 0,
+    "totalPairs": 0
+  }
+}
