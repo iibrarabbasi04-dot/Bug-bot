@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Register — BugTool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+
+    <div class="auth-container">
+        <div class="auth-brand">
+            <div class="brand-content">
+                <div class="brand-logo">
+                    <div class="brand-icon">🐛</div>
+                    <div class="brand-text">
+                        <h1>BugTool</h1>
+                        <p>Private WhatsApp Automation</p>
+                    </div>
+                </div>
+
+                <div class="brand-features">
+                    <div class="brand-feature">
+                        <div class="feature-icon">🎁</div>
+                        <div>
+                            <h3>Free Tier</h3>
+                            <p>Pair your own WhatsApp — full attacks</p>
+                        </div>
+                    </div>
+                    <div class="brand-feature">
+                        <div class="feature-icon">💎</div>
+                        <div>
+                            <h3>Premium Tier</h3>
+                            <p>Use bot's sessions — no pairing needed</p>
+                        </div>
+                    </div>
+                    <div class="brand-feature">
+                        <div class="feature-icon">🚀</div>
+                        <div>
+                            <h3>Instant Access</h3>
+                            <p>Register and start attacking in seconds</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="brand-footer">
+                    <p>© 2024 BugTool · Private Deployment</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-form-side">
+            <div class="auth-form-container">
+                <div class="auth-form-header">
+                    <h2>Create Account</h2>
+                    <p>Start with free tier — upgrade anytime</p>
+                </div>
+
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="auth-input-group">
+                        <label>Username</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">👤</span>
+                            <input type="text" id="username" placeholder="Choose username (min 3)" autocomplete="username" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label>Email (optional)</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">📧</span>
+                            <input type="email" id="email" placeholder="your@email.com" autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label>Password</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">🔑</span>
+                            <input type="password" id="password" placeholder="Min 6 characters" autocomplete="new-password" required>
+                            <button type="button" class="auth-toggle-pass" onclick="togglePass('password')">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="auth-input-group">
+                        <label>Confirm Password</label>
+                        <div class="auth-input-wrapper">
+                            <span class="auth-input-icon">🔒</span>
+                            <input type="password" id="password2" placeholder="Re-enter password" autocomplete="new-password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-btn auth-btn-primary" id="registerBtn">
+                        <span>Create Account</span>
+                        <span>→</span>
+                    </button>
+
+                    <div class="auth-error" id="errorBox"></div>
+
+                    <div class="auth-divider">
+                        <span>ALREADY HAVE ACCOUNT?</span>
+                    </div>
+
+                    <a href="/login" class="auth-btn auth-btn-secondary">
+                        Sign In Instead
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePass(id) {
+            const p = document.getElementById(id);
+            p.type = p.type === 'password' ? 'text' : 'password';
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password2').value;
+            const btn = document.getElementById('registerBtn');
+            const errorBox = document.getElementById('errorBox');
+
+            if (username.length < 3) return showError('Username must be 3+ characters');
+            if (password.length < 6) return showError('Password must be 6+ characters');
+            if (password !== password2) return showError('Passwords do not match');
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>Creating account...</span>';
+            errorBox.classList.remove('show');
+
+            try {
+                const res = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, email })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    btn.innerHTML = '<span>Account created! Redirecting...</span>';
+                    setTimeout(() => window.location.href = '/dashboard', 800);
+                } else {
+                    showError(data.error || 'Registration failed');
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>Create Account</span><span>→</span>';
+                }
+            } catch (err) {
+                showError('Cannot reach server');
+                btn.disabled = false;
+                btn.innerHTML = '<span>Create Account</span><span>→</span>';
+            }
+        }
+
+        function showError(msg) {
+            const box = document.getElementById('errorBox');
+            box.textContent = msg;
+            box.classList.add('show');
+        }
+    </script>
+</body>
+</html>

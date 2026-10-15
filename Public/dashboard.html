@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Dashboard — KASHMIRI BUG VIA WEB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-body" data-page="dashboard">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-head">
+            <div class="logo-wrap">
+                <div class="logo-icon">🐛</div>
+                <div class="logo-text">
+                    <span class="logo-name">KASHMIRI BUG</span>
+                    <span class="logo-ver">VIA WEB</span>
+                </div>
+            </div>
+            <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+        </div>
+
+        <div class="user-card">
+            <div class="user-avatar" id="sidebarAvatar">👤</div>
+            <div class="user-info">
+                <span class="user-name" id="sidebarUsername">Loading...</span>
+                <span class="user-tier" id="sidebarTier">—</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <span class="nav-label">Main</span>
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="attack">
+                    <span class="nav-icon">⚡</span>
+                    <span class="nav-text">Attack</span>
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <span class="nav-label">Account</span>
+                <a href="#" class="nav-item" data-page="pairing">
+                    <span class="nav-icon">📱</span>
+                    <span class="nav-text">My Pairings</span>
+                    <span class="nav-badge" id="badgePairings">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="premium">
+                    <span class="nav-icon">💎</span>
+                    <span class="nav-text">Premium</span>
+                </a>
+            </div>
+
+            <div class="nav-group" id="adminGroup" style="display:none;">
+                <span class="nav-label">Admin</span>
+                <a href="#" class="nav-item" data-page="admin-sessions">
+                    <span class="nav-icon">🔗</span>
+                    <span class="nav-text">All Sessions</span>
+                    <span class="nav-badge" id="badgeBotSessions">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="admin-users">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-text">Users</span>
+                    <span class="nav-badge" id="badgeUsers">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="admin-logs">
+                    <span class="nav-icon">📜</span>
+                    <span class="nav-text">Logs</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-foot">
+            <div class="social-links">
+                <a href="https://t.me/KASHMIRIBOTSINC" target="_blank" title="Channel">📢</a>
+                <a href="https://t.me/kashmirimodzz" target="_blank" title="Group">👥</a>
+                <a href="https://t.me/KASHMIRI1_1" target="_blank" title="Owner">👑</a>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <span>🚪</span>
+                <span>Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+    <main class="main">
+        <header class="header">
+            <button class="hamburger" onclick="toggleSidebar()">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="header-titles">
+                <h1 class="header-title" id="pageTitle">Dashboard</h1>
+                <p class="header-sub" id="pageSubtitle">Welcome back</p>
+            </div>
+            <div class="header-status">
+                <span class="status-dot"></span>
+                <span>Online</span>
+            </div>
+        </header>
+
+        <section class="page active" id="view-dashboard">
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-head">
+                        <span class="stat-icon">📱</span>
+                        <span class="stat-chip" id="tierChip">Free</span>
+                    </div>
+                    <div class="stat-value" id="statUserSessions">0</div>
+                    <div class="stat-label">My Sessions</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-head">
+                        <span class="stat-icon">⚡</span>
+                        <span class="stat-chip">Total</span>
+                    </div>
+                    <div class="stat-value" id="statTotalAttacks">0</div>
+                    <div class="stat-label">My Attacks</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-head">
+                        <span class="stat-icon">🔗</span>
+                        <span class="stat-chip">Global</span>
+                    </div>
+                    <div class="stat-value" id="statBotSessions">0</div>
+                    <div class="stat-label">Bot Sessions</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-head">
+                        <span class="stat-icon">⏰</span>
+                        <span class="stat-chip">Status</span>
+                    </div>
+                    <div class="stat-value" id="statExpiry">∞</div>
+                    <div class="stat-label">Account</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-head">
+                        <div>
+                            <h2 class="card-title">⚡ Quick Attack</h2>
+                            <p class="card-sub">Launch an attack instantly</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-field">
+                                <label>Attack Type</label>
+                                <select id="quickAttackType" class="input"></select>
+                            </div>
+                            <div class="form-field">
+                                <label>Target Number</label>
+                                <input type="text" id="quickTarget" class="input" placeholder="923001234567">
+                            </div>
+                            <div class="form-field small">
+                                <label>Count</label>
+                                <input type="number" id="quickCount" class="input" value="1" min="1" max="100">
+                            </div>
+                            <div class="form-field small">
+                                <label>&nbsp;</label>
+                                <button class="btn btn-primary full" onclick="quickAttack(event)">Send</button>
+                            </div>
+                        </div>
+                        <div class="result" id="quickResult"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-head">
+                        <div>
+                            <h2 class="card-title">👤 Account Info</h2>
+                            <p class="card-sub">Your tier & limits</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-key">Username</span>
+                                <span class="info-val mono" id="infoUsername">—</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-key">Tier</span>
+                                <span class="info-val" id="infoTier">—</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-key">Expires</span>
+                                <span class="info-val" id="infoExpiry">—</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-key">Rule</span>
+                                <span class="info-val" id="infoRule">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="view-attack">
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <h2 class="card-title">⚡ Full Attack</h2>
+                        <p class="card-sub">Advanced attack configuration</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label>Attack Type</label>
+                            <select id="attackType" class="input"></select>
+                        </div>
+                        <div class="form-field">
+                            <label>Target Number</label>
+                            <input type="text" id="attackTarget" class="input" placeholder="923001234567">
+                        </div>
+                        <div class="form-field small">
+                            <label>Loops</label>
+                            <input type="number" id="attackCount" class="input" value="1" min="1" max="100">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" onclick="sendAttack(event)">🚀 Execute Attack</button>
+                    <div class="result" id="attackResult"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="view-pairing">
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <h2 class="card-title">📱 My Pairings</h2>
+                        <p class="card-sub">Pair your WhatsApp for free tier</p>
+                    </div>
+                    <button class="btn btn-ghost" onclick="loadPairings()">🔄 Refresh</button>
+                </div>
+                <div class="card-body">
+                    <div class="pair-form">
+                        <input type="text" id="pairNumber" class="input" placeholder="923001234567">
+                        <button class="btn btn-primary" onclick="requestPair(event)">📲 Request Pair Code</button>
+                    </div>
+                    <div class="pair-code" id="pairCodeDisplay"></div>
+                    <div class="list" id="pairingList"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="view-premium">
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <h2 class="card-title">💎 Premium</h2>
+                        <p class="card-sub">Upgrade your access</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="premium-box">
+                        <h3>Upgrade to Premium</h3>
+                        <p>Get unlimited attacks with bot's sessions. No pairing required.</p>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-key">Free Tier</span>
+                                <span class="info-val">Pair WhatsApp · Limited</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-key">Premium</span>
+                                <span class="info-val">Bot sessions · Unlimited</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-key">Contact</span>
+                                <a href="https://t.me/KASHMIRI1_1" target="_blank" class="info-val link">@KASHMIRI1_1</a>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-key">Channel</span>
+                                <a href="https://t.me/KASHMIRIBOTSINC" target="_blank" class="info-val link">@KASHMIRIBOTSINC</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="view-admin-sessions">
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <h2 class="card-title">🔗 All Sessions</h2>
+                        <p class="card-sub">Manage all paired WhatsApp numbers</p>
+                    </div>
+                    <button class="btn btn-ghost" onclick="loadAdminSessions()">🔄 Refresh</button>
+                </div>
+                <div class="card-body">
+                    <div class="session-stats" id="sessionStats"></div>
+                    <div class="list" id="adminSessionsList"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="view-admin-users">
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <h2 class="card-title">👥 Users</h2>
+                        <p class="card-sub">Manage all user accounts</p>
+                    </div>
+                    <button class="btn btn-ghost" onclick="loadAdminUsers()">🔄 Refresh</button>
+                </div>
+                <div class="card-body">
+                    <div class="list" id="adminUsersList"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="page" id="view-admin-logs">
+            <div class="card">
+                <div class="card-head">
+                    <div>
+                        <h2 class="card-title">📜 Logs</h2>
+                        <p class="card-sub">Recent API activity</p>
+                    </div>
+                    <button class="btn btn-ghost" onclick="loadLogs()">🔄 Refresh</button>
+                </div>
+                <div class="card-body">
+                    <div class="logs" id="logsList"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

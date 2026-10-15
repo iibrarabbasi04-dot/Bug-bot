@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>KASHMIRI BOT — Loading</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(0, 255, 136, 0.12), transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(0, 180, 255, 0.1), transparent 45%),
+                #0a0a0f;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        .loader {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-wrap {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 28px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow:
+                0 20px 60px rgba(0, 255, 136, 0.4),
+                0 0 80px rgba(0, 255, 136, 0.2);
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.03); }
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 40%, #00ff88 120%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 32px;
+            border: 3px solid rgba(0, 255, 136, 0.15);
+            border-top-color: #00ff88;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: #888;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn.primary {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #000;
+            border-color: transparent;
+            box-shadow: 0 8px 24px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 255, 136, 0.4);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="logo-wrap">🐛</div>
+        <h1 class="title">KASHMIRI BOT</h1>
+        <p class="subtitle">Redirecting...</p>
+        <div class="spinner"></div>
+        <div class="actions">
+            <a href="/login" class="btn primary">🔓 Go to Login</a>
+            <a href="https://t.me/KASHMIRI_Bug_TelexWa_bot" target="_blank" class="btn">🤖 Open Bot</a>
+        </div>
+    </div>
+
+    <script>
+        (async function() {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                setTimeout(() => { window.location.href = '/login'; }, 700);
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/auth/me', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+
+                if (res.ok) {
+                    window.location.href = '/dashboard';
+                } else {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    setTimeout(() => { window.location.href = '/login'; }, 400);
+                }
+            } catch (e) {
+                setTimeout(() => { window.location.href = '/login'; }, 700);
+            }
+        })();
+    </script>
+</body>
+</html>

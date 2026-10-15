@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>KASHMIRI BUG VIA WEB — Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0a;
+            --card: #131313;
+            --border: #222;
+            --text: #fff;
+            --text-2: #888;
+            --text-3: #555;
+            --green: #00ff88;
+            --green-dark: #00cc6a;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* Subtle gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 255, 136, 0.08), transparent 50%);
+            pointer-events: none;
+        }
+
+        .wrap {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 40px;
+            margin: auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        .head {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--green), var(--green-dark));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 8px 32px rgba(0, 255, 136, 0.25);
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: var(--text-2);
+        }
+
+        /* Steps */
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 0.3s ease; }
+
+        /* Info */
+        .info {
+            padding: 16px 18px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-2);
+        }
+
+        .info strong {
+            color: var(--green);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .info code {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--green);
+        }
+
+        .info .warn {
+            display: block;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        /* Telegram btn */
+        .btn-tg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 14px 20px;
+            background: #0088cc;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .btn-tg:hover {
+            background: #0077b3;
+            transform: translateY(-1px);
+        }
+
+        /* Field */
+        .field { margin-bottom: 18px; }
+
+        .field-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-2);
+            margin-bottom: 8px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .input::placeholder { color: var(--text-3); }
+
+        .input:focus {
+            outline: none;
+            border-color: var(--green);
+            background: #0f0f0f;
+            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+        }
+
+        .input.code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            text-align: center;
+            letter-spacing: 12px;
+            font-weight: 700;
+            padding: 20px;
+            color: var(--green);
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 15px 22px;
+            background: var(--green);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: var(--green-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(0, 255, 136, 0.25);
+        }
+
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+            margin-top: 10px;
+        }
+
+        .btn-ghost:hover:not(:disabled) {
+            background: #1a1a1a;
+            border-color: var(--text-3);
+            color: var(--text);
+            box-shadow: none;
+        }
+
+        /* Error */
+        .error {
+            display: none;
+            padding: 14px 16px;
+            background: rgba(255, 71, 87, 0.08);
+            border: 1px solid rgba(255, 71, 87, 0.2);
+            border-radius: 10px;
+            color: #ff6b6b;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 14px;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .error.show { display: block; }
+
+        /* Timer */
+        .timer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-3);
+            margin-top: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 10px;
+            background: #0a0a0a;
+            border-radius: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-3);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .footer-link {
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .footer-link:hover {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: rgba(0, 255, 136, 0.3);
+            color: var(--green);
+        }
+
+        .footer-brand {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-3);
+            margin-top: 16px;
+        }
+
+        .footer-brand a {
+            color: var(--green);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 500px) {
+            .card { padding: 36px 24px; }
+            .title { font-size: 20px; }
+            .logo { width: 64px; height: 64px; font-size: 30px; }
+            .input.code { font-size: 24px; letter-spacing: 8px; padding: 16px; }
+            .footer-links { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="card">
+            <div class="head">
+                <div class="logo">🐛</div>
+                <h1 class="title">KASHMIRI BUG VIA WEB</h1>
+                <p class="subtitle">Login with your Telegram account</p>
+            </div>
+
+            <!-- STEP 1 -->
+            <div class="step active" id="step1">
+                <div class="info">
+                    <strong>📋 How to login:</strong>
+                    1. Open Telegram bot<br>
+                    2. Click START button<br>
+                    3. Send <code>/myid</code><br>
+                    4. Copy Chat ID and paste below
+                    <span class="warn">⚠️ You MUST start the bot first, or code won't arrive!</span>
+                </div>
+
+                <a href="https://t.me/KASHMIRI_Bug_TelexWa_bot" target="_blank" class="btn-tg">
+                    <span>✈️</span>
+                    <span>Open Telegram Bot</span>
+                </a>
+
+                <div class="field">
+                    <label class="field-label">Your Telegram Chat ID</label>
+                    <input type="text" id="userId" class="input" placeholder="123456789" autocomplete="off" inputmode="numeric">
+                </div>
+
+                <button class="btn" onclick="requestOTP(event)" id="sendBtn">
+                    <span>📨</span>
+                    <span>Send Login Code</span>
+                </button>
+
+                <div class="error" id="error1"></div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step" id="step2">
+                <div class="info">
+                    <strong>✅ Code Sent!</strong>
+                    Check your Telegram — enter the 6-digit code below.
+                </div>
+
+                <div class="field">
+                    <label class="field-label">Verification Code</label>
+                    <input type="text" id="otpCode" class="input code" placeholder="000000" maxlength="6" inputmode="numeric" autocomplete="off">
+                </div>
+
+                <button class="btn" onclick="verifyOTP(event)" id="verifyBtn">
+                    <span>🔓</span>
+                    <span>Verify & Login</span>
+                </button>
+
+                <button class="btn btn-ghost" onclick="backToStep1()">
+                    ← Change Chat ID
+                </button>
+
+                <div class="error" id="error2"></div>
+                <div class="timer" id="timer"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-label">Connect With Us</div>
+                <div class="footer-links">
+                    <a href="https://t.me/KASHMIRI_Bug_TelexWa_bot" target="_blank" class="footer-link">🤖 Bot</a>
+                    <a href="https://t.me/KASHMIRIBOTSINC" target="_blank" class="footer-link">📢 Channel</a>
+                </div>
+                <div class="footer-links">
+                    <a href="https://t.me/kashmirimodzz" target="_blank" class="footer-link">👥 Group</a>
+                    <a href="https://t.me/KASHMIRI1_1" target="_blank" class="footer-link">👑 Owner</a>
+                </div>
+                <div class="footer-brand">
+                    © 2024 <a href="https://t.me/KASHMIRI1_1" target="_blank">KASHMIRI BUG</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const state = { userId: '', expiresAt: 0, timerInterval: null };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('userId').addEventListener('keypress', e => {
+                if (e.key === 'Enter') requestOTP(e);
+            });
+            document.getElementById('otpCode').addEventListener('keypress', e => {
+                if (e.key === 'Enter') verifyOTP(e);
+            });
+            document.getElementById('otpCode').addEventListener('input', e => {
+                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+            });
+        });
+
+        async function requestOTP(e) {
+            e.preventDefault();
+            const userId = document.getElementById('userId').value.trim();
+            const btn = document.getElementById('sendBtn');
+            const error1 = document.getElementById('error1');
+            error1.classList.remove('show');
+
+            if (!userId || !/^\d{6,}$/.test(userId)) {
+                error1.textContent = '⚠️ Please enter a valid numeric Chat ID';
+                error1.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳</span><span>Sending...</span>';
+
+            try {
+                const res = await fetch('/api/auth/request-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    state.userId = userId;
+                    state.expiresAt = Date.now() + (data.expiresIn || 300) * 1000;
+                    showStep(2);
+                    startTimer();
+                    document.getElementById('otpCode').focus();
+                } else {
+                    error1.textContent = data.error || 'Failed to send code';
+                    error1.classList.add('show');
+                }
+            } catch (err) {
+                error1.textContent = '⚠️ Network error. Try again.';
+                error1.classList.add('show');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>📨</span><span>Send Login Code</span>';
+            }
+        }
+
+        async function verifyOTP(e) {
+            e.preventDefault();
+            const code = document.getElementById('otpCode').value.trim();
+            const btn = document.getElementById('verifyBtn');
+            const error2 = document.getElementById('error2');
+            error2.classList.remove('show');
+
+            if (!code || code.length !== 6) {
+                error2.textContent = '⚠️ Enter 6-digit code';
+                error2.classList.add('show');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳</span><span>Verifying...</span>';
+
+            try {
+                const res = await fetch('/api/auth/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: state.userId, code })
+                });
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    btn.innerHTML = '<span>✅</span><span>Success! Redirecting...</span>';
+                    setTimeout(() => window.location.href = '/dashboard', 500);
+                } else {
+                    error2.textContent = data.error || 'Invalid code';
+                    error2.classList.add('show');
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>🔓</span><span>Verify & Login</span>';
+                }
+            } catch (err) {
+                error2.textContent = '⚠️ Network error. Try again.';
+                error2.classList.add('show');
+                btn.disabled = false;
+                btn.innerHTML = '<span>🔓</span><span>Verify & Login</span>';
+            }
+        }
+
+        function showStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+        }
+
+        function backToStep1() {
+            clearInterval(state.timerInterval);
+            document.getElementById('otpCode').value = '';
+            showStep(1);
+        }
+
+        function startTimer() {
+            clearInterval(state.timerInterval);
+            const timerEl = document.getElementById('timer');
+            state.timerInterval = setInterval(() => {
+                const remaining = Math.max(0, state.expiresAt - Date.now());
+                const mins = Math.floor(remaining / 60000);
+                const secs = Math.floor((remaining % 60000) / 1000);
+                timerEl.textContent = `⏱ Code expires in ${mins}:${secs.toString().padStart(2, '0')}`;
+                if (remaining <= 0) {
+                    clearInterval(state.timerInterval);
+                    timerEl.textContent = '⚠️ Code expired. Request new code.';
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
