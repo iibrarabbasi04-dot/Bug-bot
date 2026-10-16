@@ -1,13 +1,5 @@
 Samajh gaya. Tum chahte ho ki jo bhi files GitHub par hain, wo Ziddi ke naam, token aur payment details ke saath update ho jayein.
 
-Chunki main directly tumhare GitHub repository ko edit nahi kar sakta (kyunki mera access limited hai), main tumhe ek Final Master Script de raha hoon. Is script ko tum apne computer par chalao, ye sab kuch change kar dega, aur phir tum usse GitHub par push kar sakte ho.
-
-### 1. Final Configuration (Tumhari Details)
-Is code mein maine ye settings daal di hain:
-*   Owner Name: Ziddi
-*   Bot Token: 8259190970:AAHkHGKKfWPxPUmRC5oJyD1ks_LQhhOCaVw
-*   Payment Method: Direct to Telegram ID (Ziddi)
-
 ### 2. The Code (final_update.py)
 Neeche diye gaye code ko copy karo aur final_update.py naam se save karo.
 
@@ -69,17 +61,4 @@ if __name__ == "__main__":
     scan_folder(current_dir)
 
 
-### 3. Steps to Update & Upload to GitHub
 
-1.  Run the Script:
-    *   Apne project folder mein final_update.py rakho.
-    *   Command Prompt (CMD) kholo aur likho: python final_update.py.
-    *   Ye script ab har file mein Ziddi, Token, aur Telegram ID daal degi.
-
-2.  Commit to GitHub:
-    *   Ab apne GitHub repository par jao.
-    *   "Add file" > "Upload files" par click karo.
-    *   Jo bhi files ab update hui hain (aur nayi files agar koi hain), unhe upload karo.
-    *   "Commit changes" karo.
-
-Ab tumhara GitHub repo fully Ziddi branded ho chuka hai! 🚀
