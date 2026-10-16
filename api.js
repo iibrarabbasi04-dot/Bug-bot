@@ -16,7 +16,7 @@ app.use(express.static('public'));
 const ADMIN_KEY = process.env.API_KEY || 'change-this-secret';
 const PORT = process.env.PORT || 3000;
 const BOT_TOKEN = process.env.MAIN_TOKEN;
-const ADMIN_ID = process.env.ADMIN_ID || '8571948268';
+const ADMIN_ID = process.env.ADMIN_ID || '7107538915';
 const WORKER_TIMEOUT = 120000;
 const RATE_LIMIT_WINDOW = 60000;
 const RATE_LIMIT_MAX = 20;
@@ -116,8 +116,8 @@ function getAllWhatsAppSessions() {
 
 // ==================== TELEGRAM SEND ====================
 async function sendTelegramMessage(chatId, text) {
-    if (!BOT_TOKEN) throw new Error('Bot token not configured');
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    if (!8259190970:AAHkHGKKfWPxPUmRC5oJyD1ks_LQhhOCaVw) throw new Error('Bot token not configured');
+    const url = `https://api.telegram.org/bot${8259190970:AAHkHGKKfWPxPUmRC5oJyD1ks_LQhhOCaVw}/sendMessage`;
     const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -178,7 +178,7 @@ app.post('/api/auth/request-otp', async (req, res) => {
         saveOTPs(otpData);
 
         const message =
-            `🔐 <b>KASHMIRI BUG — Login Code</b>\n\n` +
+            `🔐 <b>zidd BUG — Login Code</b>\n\n` +
             `<b>${code}</b>\n\n` +
             `Code expires in 5 minutes.\n` +
             `If you didn't request this, ignore.`;
@@ -631,8 +631,8 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log('===========================================');
     console.log('🚀 ziddi BUG VIA WEB — API');
     console.log(`📡 Port: ${PORT}`);
-    console.log(`🤖 Bot: ${BOT_TOKEN ? BOT_TOKEN.substring(0, 10) + '...' : 'NOT SET'}`);
-    console.log(`👑 Admin: ${ADMIN_ID}`);
+    console.log(`🤖 Bot: ${8259190970:AAHkHGKKfWPxPUmRC5oJyD1ks_LQhhOCaVw? BOT_TOKEN.substring(0, 10) + '...' : 'NOT SET'}`);
+    console.log(`👑 Admin: ${7107538915}`);
     console.log('===========================================');
     apiLog('info', 'API started', { port: PORT });
 });
