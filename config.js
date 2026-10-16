@@ -1,27 +1,27 @@
 module.exports = {
     // ==================== BOT ====================
-    mainToken: '8301152211:s',
+    mainToken: '8259190970:s',
     bot: 'KASHMIRI BOT',
-    botUsername: '@KASHMIRI_Bug_TelexWa_bot',
-    botLink: 'https://t.me/KASHMIRI_Bug_TelexWa_bot',
+    botUsername: '@Ziddi_Bugbot',
+    botLink: 'http://t.me/Ziddi_Bugbot',
 
     // ==================== OWNER ====================
     S7: 'KASHMIRI',
-    adminId: '8571948268',
-    ownerName: '@KASHMIRI1_1',
-    ownerLink: 'https://t.me/KASHMIRI1_1',
+    adminId: '8259190970',
+    ownerName: 'https://t.me/ziddiboyhackin',
+    ownerLink: '@Ziddiboy3021',
 
     // ==================== CHANNEL ====================
-    channelId: 'KASHMIRIBOTSINC',
-    channel: 'https://t.me/KASHMIRIBOTSINC',
+    channelId: '@ziddiboyhacking',
+    channel: 'https://t.me/ziddiboyhacking',
 
     // ==================== GROUP ====================
-    groupId: 'kashmirimodzz',
-    group: 'https://t.me/kashmirimodzz',
+    groupId: '@ziddiboyhackin',
+    group: 'https://t.me/ziddiboyhackin',
 
     // ==================== FORCE JOIN ====================
-    forceChannelUsername: '@KASHMIRIBOTSINC',
-    forceGroupUsername: '@kashmirimodzz',
+    forceChannelUsername: 'https://t.me/ziddiboyhackin',
+    forceGroupUsername: 'https://t.me/ziddiboyhackin',
 
     // ==================== LOGO ====================
     logo: './SY/Loves.jpg'
